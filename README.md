@@ -1,6 +1,11 @@
-# JSON Schema to Excel Mapper
+# 📘 JSON ↔ Excel Mapping Tool
 
-This tool converts a **JSON Schema** into an **Excel mapping sheet** that you can fill in with values and later convert back to a JSON instance.
+This project converts between **JSON Schema**, **JSON Instances**, and **Excel mappings**.  
+It supports three modes:
+
+1. **Schema → Excel**: Generate an Excel mapping from a JSON Schema.  
+2. **Instance → Excel**: Flatten a JSON instance into an Excel mapping.  
+3. **Excel → Instance**: Reconstruct a JSON instance from an Excel mapping. 
 
 ## 📂 Folder Structure
 ```
@@ -25,27 +30,64 @@ json-schema-mapper/
    pip install -r requirements.txt
    ```
 
-3. Place your schema in `files/input/`, e.g.:
+3. Place your files in `files/input/`, e.g.:
    ```
-   files/input/FacilityRecord.json
-   or
-   files/input/0.6.0/FacilityRecord.json
-   files/input/0.6.0/ProductPassport.json
+   files/input/0.6.0/FacilityRecord.json                # schema
+   files/input/0.6.0/sample_instance/FacilityRecord_instance.json   # instance
+   files/input/0.6.0/sample_instance_excel/FacilityRecord_instance_mapping.xlsx  # excel
    ```
 
-4. Update `INPUT_DIR` and `OUTPUT_DIR` in `run.py` accordingly
-
-5. Run the tool:
+4. Run the tool:
    ```bash
    python run.py
    ```
 
-6. The Excel mapping will appear in `files/output/` or any `OUTPUT_DIR` you specified, e.g.:
+5. Choose a mode when prompted:
    ```
-   files/output/FacilityRecord_mapping.xlsx
+   Choose an action:
+   1 - Convert JSON schema(s) to Excel
+   2 - Convert JSON instance(s) to Excel
+   3 - Convert Excel(s) to JSON instance(s)
    ```
 
-## 📝 Excel Columns
+6. Enter the **input** and **output** folder paths (defaults are provided):
+   ```
+   Enter input folder path [files/input]:
+   Enter output folder path [files/output]:
+   ```
+
+---
+
+## 📂 Input & Output Examples
+
+- **Schema → Excel**  
+  ```
+  files/input/0.6.0/FacilityRecord.json
+  → files/output/0.6.0/FacilityRecord_mapping.xlsx
+  ```
+
+- **Instance → Excel**  
+  ```
+  files/input/0.6.0/sample_instance/FacilityRecord_instance.json
+  → files/output/0.6.0/sample_instance/FacilityRecord_instance_mapping.xlsx
+  ```
+
+- **Excel → Instance**  
+  ```
+  files/output/0.6.0/sample_instance/FacilityRecord_instance_mapping.xlsx
+  → files/output/0.6.0/sample_instance_json/FacilityRecord_instance_mapping_instance.json
+  ```
+
+---
+
+## ✅ Notes
+
+### 📝 Excel Columns for JSON Instance
+- `Path` → flattened JSON path (e.g., `root.child[0].name`)  
+- `Type` → data type (`string`, `int`, `float`, `bool`, `array`, `dict`)  
+- `Value` → actual value or JSON-encoded list/dict  
+
+### 📝 Excel Columns for JSON Schema
 - **Path** → JSON path to the field  
 - **Type** → field type (string, number, object, array, ref)  
 - **Required** → whether the field is mandatory  
