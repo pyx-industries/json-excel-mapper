@@ -50,9 +50,9 @@ json-schema-mapper/
    3 - Convert Excel(s) to JSON instance(s)
    ```
 
-6. Enter the **input** and **output** folder paths (defaults are provided):
+6. Enter the **input** file or folder path and the **output** folder path (defaults are provided):
    ```
-   Enter input folder path [files/input]:
+   Enter input file or folder path [files/input]:
    Enter output folder path [files/output]:
    ```
 

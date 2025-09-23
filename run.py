@@ -7,32 +7,25 @@ from src import excel_to_instance
 INPUT_DIR = "files/input"
 OUTPUT_DIR = "files/output"
 
-def process_schema_folder(input_dir, output_dir):
-    for filename in os.listdir(input_dir):
-        if filename.endswith(".json"):
-            input_path = os.path.join(input_dir, filename)
-            output_name = filename.replace(".json", "_mapping.xlsx")
-            output_path = os.path.join(output_dir, output_name)
-            schema_to_excel.json_schema_to_excel(input_path, output_path)
-            print(f"Processed schema: {filename}")
+def process_schema(input_path, output_path):
+    print(f"Processed schema: {os.path.basename(input_path)}")
+    schema_to_excel.json_schema_to_excel(input_path, output_path)
 
-def process_instance_folder(input_dir, output_dir):
-    for filename in os.listdir(input_dir):
-        if filename.endswith(".json"):
-            input_path = os.path.join(input_dir, filename)
-            output_name = filename.replace(".json", "_mapping.xlsx")
-            output_path = os.path.join(output_dir, output_name)
-            instance_to_excel.instance_to_excel(input_path, output_path)
-            print(f"Processed instance: {filename}")
+def process_instance(input_path, output_path):
+    print(f"Processed instance: {os.path.basename(input_path)}")
+    instance_to_excel.instance_to_excel(input_path, output_path)
 
-def process_excel_folder(input_dir, output_dir):
+def process_excel(input_path, output_path):
+    print(f"Processed Excel: {os.path.basename(input_path)}")
+    excel_to_instance.excel_to_instance(input_path, output_path)
+
+def process_folder(input_dir, output_dir, file_ext, processor_func, suffix):
     for filename in os.listdir(input_dir):
-        if filename.endswith(".xlsx"):
+        if filename.endswith(file_ext):
             input_path = os.path.join(input_dir, filename)
-            output_name = filename.replace(".xlsx", "_instance.json")
+            output_name = filename.replace(file_ext, suffix)
             output_path = os.path.join(output_dir, output_name)
-            excel_to_instance.excel_to_instance(input_path, output_path)
-            print(f"Processed Excel: {filename}")
+            processor_func(input_path, output_path)
 
 def main():
     print("Choose an action:")
@@ -41,18 +34,36 @@ def main():
     print("3 - Convert Excel(s) to JSON instance(s)")
     choice = input("Enter 1, 2, or 3: ").strip()
 
-    input_dir = input(f"Enter input folder path [{INPUT_DIR}]: ").strip() or INPUT_DIR
+    input_path = input(f"Enter input file or folder path [{INPUT_DIR}]: ").strip() or INPUT_DIR
     output_dir = input(f"Enter output folder path [{OUTPUT_DIR}]: ").strip() or OUTPUT_DIR
     os.makedirs(output_dir, exist_ok=True)
 
-    if choice == "1":
-        process_schema_folder(input_dir, output_dir)
-    elif choice == "2":
-        process_instance_folder(input_dir, output_dir)
-    elif choice == "3":
-        process_excel_folder(input_dir, output_dir)
+    # Determine if input is a file or folder
+    if os.path.isfile(input_path):
+        filename = os.path.basename(input_path)
+        if choice == "1":
+            output_name = filename.replace(".json", "_mapping.xlsx")
+            process_schema(input_path, os.path.join(output_dir, output_name))
+        elif choice == "2":
+            output_name = filename.replace(".json", "_mapping.xlsx")
+            process_instance(input_path, os.path.join(output_dir, output_name))
+        elif choice == "3":
+            output_name = filename.replace(".xlsx", "_instance.json")
+            process_excel(input_path, os.path.join(output_dir, output_name))
+        else:
+            print("Invalid choice!")
+
+    elif os.path.isdir(input_path):
+        if choice == "1":
+            process_folder(input_path, output_dir, ".json", process_schema, "_mapping.xlsx")
+        elif choice == "2":
+            process_folder(input_path, output_dir, ".json", process_instance, "_mapping.xlsx")
+        elif choice == "3":
+            process_folder(input_path, output_dir, ".xlsx", process_excel, "_instance.json")
+        else:
+            print("Invalid choice!")
     else:
-        print("Invalid choice!")
+        print("Invalid input path!")
 
 if __name__ == "__main__":
     main()
