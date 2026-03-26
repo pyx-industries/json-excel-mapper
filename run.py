@@ -9,7 +9,7 @@ OUTPUT_DIR = "files/output"
 
 def process_schema(input_path, output_path):
     print(f"Processed schema: {os.path.basename(input_path)}")
-    schema_to_excel.json_schema_to_excel(input_path, output_path)
+    schema_to_excel.schema_to_excel(input_path, output_path)
 
 def process_instance(input_path, output_path):
     print(f"Processed instance: {os.path.basename(input_path)}")

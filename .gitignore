@@ -35,3 +35,4 @@ Thumbs.db
 # Output files
 files/output/tests/*
 !files/output/.gitkeep
+files/tests/*
