@@ -1,0 +1,67 @@
+{
+  "type": [
+    "DigitalIdentityAnchor",
+    "VerifiableCredential"
+  ],
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://vocabulary.uncefact.org/untp/0.7.0/context/"
+  ],
+  "id": "https://credentials.houjin-register.example.com/dia/ref-001",
+  "issuer": {
+    "type": [
+      "CredentialIssuer"
+    ],
+    "id": "did:web:houjin-register.example.com",
+    "name": "Sample National Tax Agency — Corporate Number System",
+    "issuerAlsoKnownAs": [
+      {
+        "type": [
+          "Party"
+        ],
+        "id": "https://www.houjin-register.example.com",
+        "name": "Sample National Tax Agency"
+      }
+    ]
+  },
+  "validFrom": "2025-04-01T00:00:00Z",
+  "validUntil": "2027-03-31T00:00:00Z",
+  "name": "Corporate Identity Anchor — Sample Copper Refinery Co. Ltd",
+  "issuingSoftware": {
+    "id": "https://sample-software-vendor.example.com/.well-known/untp/software/passport-builder/2026.04.1",
+    "name": "Sample Passport Builder",
+    "version": "2026.04.1",
+    "vendor": {
+      "id": "did:web:sample-software-vendor.example.com",
+      "name": "Sample Software Vendor Inc"
+    }
+  },
+  "credentialSubject": {
+    "type": [
+      "RegisteredIdentity"
+    ],
+    "id": "did:web:sample-refinery.example.com",
+    "registeredName": "Sample Copper Refinery Co. Ltd",
+    "registeredId": "REF-001",
+    "registeredDate": "1985-06-15",
+    "publicInformation": "https://www.houjin-register.example.com/henkorireki-johoto.html?selHouzinNo=REF-001",
+    "idScheme": {
+      "type": [
+        "IdentifierScheme"
+      ],
+      "id": "https://www.houjin-register.example.com",
+      "name": "Japan Corporate Number (Houjin Bangou)"
+    },
+    "registrar": {
+      "type": [
+        "Party"
+      ],
+      "id": "https://www.houjin-register.example.com",
+      "name": "Sample National Tax Agency"
+    },
+    "registerType": "business",
+    "registrationScope": [
+      "https://www.houjin-register.example.com/EntityType?Id=kabushiki-kaisha"
+    ]
+  }
+}
